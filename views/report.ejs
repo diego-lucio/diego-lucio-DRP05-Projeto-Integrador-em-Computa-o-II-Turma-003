@@ -1,0 +1,59 @@
+<% const _title = 'Relatórios – PI Censo'; %>
+<%- include('layout', { title: _title, body: (function(){ %>
+  <h1 class="mb-3">Relatórios de Matrículas por Município</h1>
+  <form class="row g-3 mb-3" method="get" aria-label="Filtro de ano">
+    <div class="col-auto">
+      <label for="year" class="form-label">Ano</label>
+      <select class="form-select" id="year" name="year" aria-label="Selecione um ano para filtrar" onchange="this.form.submit()">
+        <option value="">Todos</option>
+        <% years.forEach(y => { %>
+          <option value="<%= y %>" <%= (selected_year===y)?'selected':'' %>><%= y %></option>
+        <% }) %>
+      </select>
+    </div>
+    <div class="col-auto align-self-end">
+      <a class="btn btn-link" href="/">Início</a>
+    </div>
+  </form>
+
+  <div class="card mb-4">
+    <div class="card-body">
+      <canvas id="chart" height="120" aria-label="Gráfico de barras com os 10 municípios com maior número de matrículas" role="img"></canvas>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Ano</th>
+          <th scope="col">Código Município</th>
+          <th scope="col">Município</th>
+          <th scope="col">Total Matrículas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% rows.forEach(r => { %>
+        <tr>
+          <td><%= r.year %></td>
+          <td><%= r.municipality_code %></td>
+          <td><%= r.municipality_name %></td>
+          <td><%= r.total_enrollments %></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script>
+    const labels = <%- JSON.stringify(chart_labels) %>;
+    const vals = <%- JSON.stringify(chart_values) %>;
+    const ctx = document.getElementById('chart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: { labels, datasets: [{ label: 'Matrículas (Top 10)', data: vals }] },
+      options: { responsive: true, plugins: { legend: { display: true }, title: { display: true, text: 'Distribuição de matrículas por município' } }, scales: { y: { beginAtZero: true } } }
+    });
+  </script>
+<% return '' })() }) %>

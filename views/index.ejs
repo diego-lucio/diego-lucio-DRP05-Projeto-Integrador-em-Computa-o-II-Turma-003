@@ -1,0 +1,15 @@
+<% const _title = 'Início – PI Censo'; %>
+<%- include('layout', { title: _title, body: (function(){ %>
+  <h1 class="mb-3">Sistema Integrado – Censo Escolar</h1>
+  <p class="lead">Envie um CSV, armazene no banco e gere relatórios por município, com filtro por ano.</p>
+  <div class="d-flex gap-3">
+    <a class="btn btn-primary" href="/import">Importar Dados</a>
+    <a class="btn btn-outline-secondary" href="/report">Relatórios</a>
+  </div>
+  <hr class="my-4">
+  <h2 class="h5">Como começar</h2>
+  <ol>
+    <li>Acesse <strong>Importar</strong> e envie um CSV com as colunas: <code>year,municipality_code,municipality_name,level,enrollments</code>.</li>
+    <li>Depois veja <strong>Relatórios</strong> e filtre por ano, se desejar.</li>
+  </ol>
+<% return '' })() }) %>

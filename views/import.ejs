@@ -1,0 +1,13 @@
+<% const _title = 'Importar – PI Censo'; %>
+<%- include('layout', { title: _title, body: (function(){ %>
+  <h1 class="mb-4">Importar Dados (CSV)</h1>
+  <form method="post" action="/api/import" enctype="multipart/form-data" aria-describedby="dica-csv">
+    <div class="mb-3">
+      <label for="file" class="form-label">Arquivo CSV</label>
+      <input class="form-control" id="file" name="file" type="file" accept=".csv" aria-required="true" />
+      <div id="dica-csv" class="form-text">Colunas: year, municipality_code, municipality_name, level, enrollments</div>
+    </div>
+    <button class="btn btn-primary" type="submit">Importar</button>
+    <a class="btn btn-link" href="/">Voltar</a>
+  </form>
+<% return '' })() }) %>
